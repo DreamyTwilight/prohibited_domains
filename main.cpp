@@ -1,9 +1,9 @@
 #include <algorithm>
 #include <iostream>
 #include <string>
-#include <set>
+#include <set> // заголовок мжно убрать, он не используется
 #include <sstream>
-#include <string_view>
+#include <string_view> // заголовок можно убрать, он не используется
 #include <vector>
 #include <map>
 #include <fstream>
@@ -31,7 +31,7 @@ public:
     }
 
     bool IsSubdomain(const Domain& other) const {
-        assert(this->domain_ != other.domain_);
+        assert(this->domain_ != other.domain_); // отличная проверка, но можно заменить assert на обычный if... true (домен является своим поддоменом)
         if (count_symbols_ <= other.count_symbols_) {
             return false;
         }
@@ -43,7 +43,7 @@ private:
     std::string domain_reverse_;
     size_t count_symbols_ = 0;
 
-    std::string ReverseDomainName(const std::string& domain_) {
+    std::string ReverseDomainName(const std::string& domain_) { // стоит рассмотреть реализацию из стандартной библиотеки: std::reverse
         auto position_dot = domain_.find('.');
         size_t first_symbol = 0;
         std::vector<string> catting_domain_name;
@@ -69,7 +69,7 @@ private:
 
 class DomainChecker {
 public:
-    // ����������� ������ ��������� ������ ����������� ������� ����� ���� ����������
+    // êîíñòðóêòîð äîëæåí ïðèíèìàòü ñïèñîê çàïðåù¸ííûõ äîìåíîâ ÷åðåç ïàðó èòåðàòîðîâ
     template <typename Itr>
     DomainChecker(const Itr& begin, const Itr& end){
         if (begin != end) {
@@ -90,7 +90,7 @@ public:
         }
     }
 
-    // ������������ ����� IsForbidden, ������������ true, ���� ����� ��������
+    // ðàçðàáîòàéòå ìåòîä IsForbidden, âîçâðàùàþùèé true, åñëè äîìåí çàïðåù¸í
     bool IsForbidden(const Domain& domain) const {
         if (forbidden_domains_.empty()) {
             return false;
@@ -114,7 +114,7 @@ private:
     size_t max_length_name_domain_ = 0;
 };
 
-// ������������ ������� ReadDomains, �������� �������� ���������� ������� �� ������������ �����
+// ðàçðàáîòàéòå ôóíêöèþ ReadDomains, ÷èòàþùóþ çàäàííîå êîëè÷åñòâî äîìåíîâ èç ñòàíäàðòíîãî âõîäà
 template <typename Number>
 std::vector<Domain> ReadDomains(std::istream& in, Number num) {
     std::vector<Domain> domains;
