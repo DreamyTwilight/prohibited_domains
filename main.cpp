@@ -1,9 +1,9 @@
 #include <algorithm>
 #include <iostream>
 #include <string>
-#include <set>
+#include <set>            // можно не подключать файл, он не используется
 #include <sstream>
-#include <string_view>
+#include <string_view>    // можно не подключать файл, он не используется
 #include <vector>
 #include <map>
 #include <fstream>
@@ -23,7 +23,7 @@ public:
     bool operator==(const Domain& other) const {
         return domain_ == other.domain_;
 }
-    std::string GetNameDomain() const {
+    std::string GetNameDomain() const { // геттеры - это хорошо, но этот можно убрать, он не используется
         return domain_;
     }
     std::string GetReverseNameDomain() const {
@@ -31,7 +31,7 @@ public:
     }
 
     bool IsSubdomain(const Domain& other) const {
-        assert(this->domain_ != other.domain_);
+        assert(this->domain_ != other.domain_); // очень хорошая проверка, но assert можно просто заменить на "if.. return true"
         if (count_symbols_ <= other.count_symbols_) {
             return false;
         }
@@ -54,7 +54,7 @@ private:
         }
         catting_domain_name.push_back(domain_.substr(first_symbol, position_dot - first_symbol));
 
-        std::string reverse_name_domain;
+        std::string reverse_name_domain; // советую заменить на реализацию из стандартной библиотеки std::reverse
         bool first = true;
         for (auto it = catting_domain_name.rbegin(); it < catting_domain_name.rend(); ++it) {
             if (!first) {
@@ -69,7 +69,7 @@ private:
 
 class DomainChecker {
 public:
-    // ����������� ������ ��������� ������ ����������� ������� ����� ���� ����������
+    // êîíñòðóêòîð äîëæåí ïðèíèìàòü ñïèñîê çàïðåù¸ííûõ äîìåíîâ ÷åðåç ïàðó èòåðàòîðîâ
     template <typename Itr>
     DomainChecker(const Itr& begin, const Itr& end){
         if (begin != end) {
@@ -90,7 +90,7 @@ public:
         }
     }
 
-    // ������������ ����� IsForbidden, ������������ true, ���� ����� ��������
+    // ðàçðàáîòàéòå ìåòîä IsForbidden, âîçâðàùàþùèé true, åñëè äîìåí çàïðåù¸í
     bool IsForbidden(const Domain& domain) const {
         if (forbidden_domains_.empty()) {
             return false;
@@ -114,7 +114,7 @@ private:
     size_t max_length_name_domain_ = 0;
 };
 
-// ������������ ������� ReadDomains, �������� �������� ���������� ������� �� ������������ �����
+// ðàçðàáîòàéòå ôóíêöèþ ReadDomains, ÷èòàþùóþ çàäàííîå êîëè÷åñòâî äîìåíîâ èç ñòàíäàðòíîãî âõîäà
 template <typename Number>
 std::vector<Domain> ReadDomains(std::istream& in, Number num) {
     std::vector<Domain> domains;
